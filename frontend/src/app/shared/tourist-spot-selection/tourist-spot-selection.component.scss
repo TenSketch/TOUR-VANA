@@ -1,0 +1,368 @@
+.tourist-spot-section {
+    padding: 1rem 0;
+}
+
+.tourist-spot {
+    background: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 1.25rem 1rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    position: relative;
+    /* needed for absolute children (entry-badge and actions) */
+    padding-bottom: 4.5rem;
+    /* add extra bottom padding to accommodate actions */
+}
+
+.header {
+    margin-bottom: 1rem;
+
+    .title {
+        /* smaller, responsive title to fit long spot names in the same line */
+        font-size: clamp(1.05rem, 1.6vw, 1.25rem);
+        font-weight: 600;
+        margin: 0;
+        color: #333;
+        display:inline-block;
+        white-space: nowrap; /* prefer single-line */
+        overflow: hidden;
+        text-overflow: ellipsis;
+
+        .sep {
+            color: #999;
+            margin: 0 0.12rem;
+        }
+
+        .loc {
+            color: #666;
+            font-weight: 400;
+            font-size: 0.95rem;
+            display: inline-block;
+            vertical-align: middle;
+            margin-left: 0.25rem;
+            white-space: nowrap;
+        }
+    }
+
+    /* Show the 'sub' (type text) inline next to title on wider screens */
+    .sub {
+        display: inline-block;
+        margin-left: 0.6rem;
+        vertical-align: middle;
+        font-weight: 500;
+        color: rgba(0,0,0,0.55);
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+    }
+
+    .sub {
+        font-size: 0.95rem; /* slightly smaller to save horizontal real estate */
+        color: rgba(0,0,0,0.7);
+        margin-top: 0.25rem;
+    }
+
+    .pricing-grid {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+
+        .pricing-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.5rem;
+            background-color: #f9f9f9;
+            border-radius: 4px;
+            font-size: 0.95rem;
+
+            .label {
+                font-weight: 500;
+                color: #555;
+                flex: 1;
+            }
+
+            .price {
+                font-weight: 600;
+                color: #333;
+                margin-right: 1rem;
+            }
+
+            .quantity {
+                color: #777;
+                font-size: 0.85rem;
+                min-width: 80px;
+                text-align: right;
+            }
+        }
+    }
+}
+
+.actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+
+    // Style for Angular Material buttons to match resort page
+    button[mat-raised-button],
+    a[mat-raised-button] {
+        text-decoration: none;
+        color: #fff !important; /* Ensure button text (including anchor buttons) is white */
+    }
+
+    .btn {
+        padding: 0.5rem 1.5rem;
+        font-size: 1.05rem;
+        border-radius: 4px;
+        font-weight: 500;
+        text-decoration: none;
+        cursor: pointer;
+        transition: all 0.2s;
+
+        &.add {
+            background-color: #28a745;
+            color: white;
+            border: none;
+
+            &:hover:not(:disabled) {
+                background-color: #218838;
+            }
+
+            &:disabled {
+                background-color: #ccc;
+                cursor: not-allowed;
+            }
+        }
+
+        &.details {
+            background-color: transparent;
+            color: #007bff;
+            border: 1px solid #007bff;
+
+            &:hover {
+                background-color: #007bff;
+                color: white;
+            }
+        }
+    }
+}
+
+.header-left {
+    text-align: left;
+    margin-bottom: 0.5rem;
+}
+
+/* gallery styles to match resort rooms slider */
+.containerg {
+    position: relative;
+
+    .card-containerg {
+        display: flex;
+        overflow-x: auto;
+        scrollbar-width: none;
+        align-items: center;
+        position: relative;
+        scroll-behavior: smooth;
+        scroll-snap-type: x mandatory;
+
+        &::-webkit-scrollbar {
+            display: none;
+        }
+
+        .card {
+            flex: 1 0 auto;
+            border: 0;
+            box-shadow: unset;
+            padding-left: 0;
+
+            img {
+                width: 280px;
+                height: 280px;
+                object-fit: cover;
+                border-radius: 12px;
+                scroll-snap-align: center;
+                cursor: pointer;
+            }
+        }
+    }
+
+    .scroll-icon {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 28px;
+        cursor: pointer;
+        opacity: 1;
+        transition: opacity 0.3s ease-in-out;
+        color: yellow;
+
+        &.left {
+            left: 8px;
+        }
+
+        &.right {
+            right: 8px;
+        }
+    }
+}
+
+.full-image-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.75);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+}
+
+.full-image-container {
+    max-width: 90%;
+    max-height: 90%;
+}
+
+.full-image {
+    max-width: 100%;
+    max-height: 100%;
+    border-radius: 6px;
+}
+
+.overlay-controls {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+
+.download-button,
+.close-button {
+    background-color: #ffffff;
+    color: #333333;
+    border: none;
+    padding: 8px 16px;
+    margin-right: 10px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.download-button:hover,
+.close-button:hover {
+    background-color: #f0f0f0;
+}
+
+/* Larger, reworked badges for spot details and fees */
+.spot-details .fee-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 1rem;
+    padding: 0.55rem 1rem;
+    border-radius: 12px;
+    background: linear-gradient(180deg, #ffffff 0%, #f6fbff 100%);
+    color: #04263a;
+    border: 1px solid #d7eaf6;
+    font-weight: 700;
+    box-shadow: 0 6px 18px rgba(13, 42, 61, 0.06);
+}
+
+/* Make fee badges stand out on small screens by stacking */
+@media (max-width: 767px) {
+    .spot-details {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.6rem;
+    }
+
+    .spot-details .fee-badge,
+    .spot-details .meta-badge {
+        font-size: 0.95rem;
+        padding: 0.5rem 0.9rem;
+        flex: 0 0 auto;
+    }
+}
+
+/* Desktop (PC) view: stack fee badges vertically and improve layout */
+@media (min-width: 992px) {
+
+    /* Anchor the fee badges to the right-hand side of the card and improve readability */
+    .spot-details {
+        float: right;
+        width: 260px;
+        display: flex;
+        flex-direction: column;
+        gap: 0.9rem;
+        padding-top: 0.35rem;
+        margin-left: 1rem;
+    }
+
+    /* Make fee badges a neat two-column grid: label | value */
+    .spot-details .fee-badge {
+        width: 100%;
+        display: grid;
+        grid-template-columns: 1fr auto;
+        align-items: center;
+        gap: 12px;
+        text-align: left;
+        padding: 0.75rem 1rem;
+        font-size: 1.05rem;
+        border-radius: 12px;
+        background: linear-gradient(180deg, #ffffff 0%, #f8fbff 100%);
+        border: 1px solid rgba(13, 42, 61, 0.06);
+        box-shadow: 0 10px 30px rgba(13, 42, 61, 0.04);
+    }
+
+    .spot-details .fee-badge strong {
+        display: block;
+        font-weight: 700;
+        color: #04263a;
+    }
+
+    /* Value column: right aligned and emphasized */
+    .spot-details .fee-badge span:last-child,
+    .spot-details .fee-badge .price-value {
+        justify-self: end;
+        font-weight: 800;
+        color: #072238;
+    }
+}
+
+/* Ticket badge styles removed — ticket design no longer used on tourist spot pages */
+
+/* place horizontal actions to bottom-right on larger screens */
+.actions.actions-bottom-right {
+    position: absolute;
+    right: 12px;
+    bottom: 12px;
+    z-index: 4;
+    display: flex;
+    gap: 0.75rem;
+}
+
+/* On small screens, keep actions in normal document flow so they don't overlap content */
+@media (max-width: 767px) {
+    .actions.actions-bottom-right {
+        position: static;
+        bottom: auto;
+        right: auto;
+        margin-top: 1rem;
+        justify-content: flex-end;
+    }
+
+    .tourist-spot {
+        padding-bottom: 1rem
+    }
+}
+
+/* Make titles wrap on smaller screens so they are readable */
+@media (max-width: 991px) {
+    .header .title {
+        white-space: normal;
+        overflow: visible;
+    }
+    .header .title .loc {
+        display:block;
+        margin-left: 0;
+    }
+}

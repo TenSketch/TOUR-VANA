@@ -1,0 +1,618 @@
+.main {
+  min-height: 100vh;
+  padding-top: 80px;
+}
+
+.page-banner {
+  color: white;
+  padding: 0;
+  margin-bottom: 0;
+}
+
+/* Hero slideshow styles */
+.hero-slideshow {
+  position: relative;
+  width: 100%;
+  height: calc(100vh - 30px);
+  min-height: 360px;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+}
+
+.hero-slideshow .slides {
+  position: absolute;
+  inset: 0;
+  display: block;
+}
+
+.slide-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transform: scale(1.02);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.slide-img.active {
+  opacity: 1;
+  transform: scale(1);
+  z-index: 1;
+}
+
+.hero-overlay {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  padding: 3rem 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  pointer-events: none;
+}
+
+.hero-overlay h1 {
+  margin: 0;
+  color: #fff;
+  text-shadow: 0 6px 18px rgba(0, 0, 0, 0.45);
+}
+
+.hero-dots {
+  position: absolute;
+  z-index: 3;
+  bottom: 18px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 8px;
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.5);
+  border: none;
+  cursor: pointer;
+  transition: transform 0.15s ease, background 0.15s ease;
+  padding: 0;
+}
+
+.dot.active,
+.dot:focus,
+.dot:hover {
+  background: #fff;
+  transform: scale(1.15);
+}
+
+.tourist-spots-list {
+  .tourist-spot-card {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1) !important;
+    }
+  }
+
+  /* Category header / section title styling in the booking list */
+  h2.h4 {
+    color: #0b5a2b;
+    font-weight: 700;
+    font-size: 1.25rem;
+  }
+}
+
+.booking-summary-card {
+  position: sticky;
+  top: 100px;
+
+  .card {
+    border: none;
+    border-radius: 15px;
+    overflow: hidden;
+  }
+
+  .card-header {
+    background: linear-gradient(135deg, hsl(90, 100%, 30%) 0%, hsl(90, 100%, 20%) 100%) !important;
+    border: none;
+    padding: 1.25rem;
+    user-select: none;
+    transition: background 0.2s ease;
+
+    &:hover {
+      background: linear-gradient(135deg, hsl(90, 100%, 20%) 0%, hsl(90, 100%, 30%) 100%) !important;
+    }
+
+    h5 {
+      font-weight: 600;
+    }
+
+    .toggle-icon {
+      transition: transform 0.3s ease;
+      font-size: 1.2rem;
+
+      &.rotated {
+        transform: rotate(-180deg);
+      }
+    }
+  }
+
+  .card-body {
+    padding: 1.5rem;
+  }
+
+  .accordion-content {
+    max-height: 2000px;
+    overflow: hidden;
+    transition: max-height 0.4s ease, padding 0.4s ease, opacity 0.3s ease;
+    opacity: 1;
+
+    &.collapsed {
+      max-height: 0;
+      padding-top: 0 !important;
+      padding-bottom: 0 !important;
+      opacity: 0;
+    }
+  }
+}
+
+.booked-spot {
+  /* Remove boxed background to match resort booking summary */
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  transition: none;
+
+  &:hover {
+    border-color: transparent !important;
+    box-shadow: none;
+  }
+
+  h6 {
+    color: hsl(90, 100%, 20%);
+    font-weight: 600;
+    margin-bottom: 0.25rem;
+  }
+
+  .fee-breakdown {
+    color: #6c757d;
+
+    >div.d-flex {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 0.75rem;
+
+      &>span:first-child {
+        flex: 1 1 auto;
+        min-width: 0;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      &>span:last-child {
+        flex: 0 0 auto;
+        margin-left: 1rem;
+        white-space: nowrap;
+      }
+    }
+
+    .fw-bold {
+      color: #212529;
+    }
+
+    .stepper-control {
+      min-width: auto; /* allow content to size naturally */
+      justify-content: flex-start;
+      gap: 0.25rem;
+
+      button {
+        font-size: 1rem; /* match resort font size */
+        line-height: 1;
+        padding: 0 6px;
+        border-radius: 4px;
+        background: transparent !important;
+        color: inherit;
+        border: 0 !important;
+
+        &:disabled {
+          opacity: 0.35;
+          cursor: not-allowed;
+        }
+        &:hover:not(:disabled) {
+          background: transparent; /* keep it flat */
+        }
+      }
+      span {
+        padding: 0 0.25rem;
+        font-weight: 600; /* match resort emphasis */
+        color: inherit;
+        background: #fff; /* white bg so ticket number looks like an input field */
+        border-radius: 6px;
+        padding: 0.125rem 0.5rem;
+        font-size: 1.05rem; /* increase font size for ticket number */
+      }
+    }
+  }
+}
+
+/* Style for mat-select dropdowns to look like "No. of Guests*" field */
+.vehicles-select,
+.guests-select {
+  &.mat-mdc-form-field {
+    min-width: 160px;
+    
+    .mdc-text-field--outlined {
+      background: hsl(90, 50%, 92%) !important; /* Light green background like No. of Guests */
+      border-radius: 6px;
+      
+      .mdc-notched-outline__leading,
+      .mdc-notched-outline__notch,
+      .mdc-notched-outline__trailing {
+        border-color: hsl(90, 30%, 70%) !important;
+      }
+    }
+    
+    .mat-mdc-select-trigger {
+      padding: 8px 12px;
+      font-size: 0.95rem;
+      color: hsl(90, 100%, 20%);
+    }
+    
+    .mat-mdc-floating-label {
+      color: hsl(90, 40%, 35%);
+      font-size: 0.9rem;
+    }
+    
+    .mat-mdc-select-arrow {
+      color: hsl(90, 40%, 35%);
+    }
+  }
+  
+  /* Tablet view adjustments - reduce dropdown width */
+  @media (min-width: 768px) and (max-width: 991.98px) {
+    &.mat-mdc-form-field {
+      min-width: 120px;
+      max-width: 130px;
+      
+      .mat-mdc-select-trigger {
+        padding: 6px 8px;
+        font-size: 0.85rem;
+      }
+      
+      .mat-mdc-floating-label {
+        font-size: 0.8rem;
+      }
+    }
+  }
+}
+
+.grand-total {
+  background: linear-gradient(135deg, hsl(89, 100%, 92%) 0%, hsl(90, 100%, 85%) 100%);
+  border-radius: 10px;
+  padding: 1.25rem;
+
+  h5,
+  h4 {
+    font-weight: 700;
+  }
+
+  .btn-success {
+    background: linear-gradient(135deg, hsl(90, 100%, 30%) 0%, hsl(90, 100%, 40%) 100%);
+    border: none;
+    border-radius: 10px;
+    padding: 0.75rem 1.5rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+
+    &:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 15px rgba(77, 153, 0, 0.22);
+    }
+
+    &:disabled {
+      opacity: 0.6;
+      transform: none;
+      box-shadow: none;
+    }
+  }
+}
+
+.btn-outline-danger {
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &:hover {
+    background-color: #dc3545;
+    border-color: #dc3545;
+  }
+}
+
+// Filters Card Styling
+.filters-card {
+  .card {
+    border: none;
+    border-radius: 15px;
+    overflow: hidden;
+  }
+
+  .card-header {
+    background: linear-gradient(135deg, #6c757d 0%, #5a6268 100%) !important;
+    border: none;
+    padding: 1.25rem;
+    user-select: none;
+    transition: background 0.2s ease;
+
+    &:hover {
+      background: linear-gradient(135deg, #5a6268 0%, #6c757d 100%) !important;
+    }
+
+    h5 {
+      font-weight: 600;
+    }
+
+    .btn-light {
+      font-size: 0.85rem;
+      padding: 0.25rem 0.75rem;
+      border-radius: 20px;
+      transition: all 0.2s ease;
+
+      &:hover {
+        background-color: #f8f9fa;
+        transform: translateY(-1px);
+      }
+    }
+
+    .toggle-icon {
+      transition: transform 0.3s ease;
+      font-size: 1.2rem;
+
+      &.rotated {
+        transform: rotate(-180deg);
+      }
+    }
+  }
+
+  .card-body {
+    padding: 1.5rem;
+  }
+
+  .accordion-content {
+    max-height: 2000px;
+    overflow: hidden;
+    transition: max-height 0.4s ease, padding 0.4s ease, opacity 0.3s ease;
+    opacity: 1;
+
+    &.collapsed {
+      max-height: 0;
+      padding-top: 0 !important;
+      padding-bottom: 0 !important;
+      opacity: 0;
+    }
+  }
+}
+
+.filter-group {
+  .filter-title {
+    color: #2c5aa0;
+    font-weight: 600;
+    font-size: 0.95rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .form-check {
+    margin-bottom: 0.75rem;
+    padding-left: 1.75rem;
+
+    .form-check-input {
+      width: 1.25rem;
+      height: 1.25rem;
+      margin-top: 0.125rem;
+      border: 2px solid #dee2e6;
+      transition: all 0.2s ease;
+
+      &:checked {
+        background-color: #2c5aa0;
+        border-color: #2c5aa0;
+      }
+
+      &:focus {
+        border-color: #2c5aa0;
+        box-shadow: 0 0 0 0.2rem rgba(44, 90, 160, 0.25);
+      }
+    }
+
+    .form-check-label {
+      font-size: 0.95rem;
+      color: #495057;
+      cursor: pointer;
+      user-select: none;
+      margin-left: 0.5rem;
+
+      &:hover {
+        color: #2c5aa0;
+      }
+    }
+  }
+}
+
+// Responsive adjustments
+@media (max-width: 991.98px) {
+  .filters-card {
+    position: static !important;
+    margin-top: 1rem;
+  }
+
+  .booking-summary-col {
+    position: sticky !important;
+    top: 80px !important; // Adjust based on navbar height
+    z-index: 900;
+    background: white; // Ensure background covers content behind it
+    padding-bottom: 10px; // Add some padding
+  }
+
+  .booking-summary-card,
+  .col-md-4 mat-accordion {
+    position: static !important;
+    margin: 0 !important;
+    width: 100%;
+    max-height: calc(100vh - 96px);
+    overflow: auto;
+  }
+
+  .tourist-spots-list {
+    margin-top: 1rem !important;
+  }
+
+  @media (max-width: 575.98px) {
+    .booking-summary-col {
+      top: 70px !important;
+    }
+  }
+}
+
+/* Tablet view specific fixes for booking summary */
+@media (min-width: 768px) and (max-width: 991.98px) {
+  .booked-spot {
+    .fee-breakdown {
+      > div.d-flex {
+        gap: 0.5rem;
+        
+        /* Ensure price text doesn't overflow */
+        > span:last-child {
+          flex-shrink: 0;
+          min-width: 50px;
+          text-align: right;
+          font-size: 0.9rem;
+        }
+        
+        /* Allow dropdown container to shrink */
+        > div.d-flex {
+          flex: 1 1 auto;
+          min-width: 0;
+          max-width: calc(100% - 60px);
+        }
+      }
+    }
+  }
+  
+  .booking-summary-col {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+}
+
+// Loading and animation states
+.alert {
+  animation: slideInDown 0.3s ease-out;
+}
+
+@keyframes slideInDown {
+  from {
+    transform: translate(-50%, -100%);
+    opacity: 0;
+  }
+
+  to {
+    transform: translate(-50%, 0);
+    opacity: 1;
+  }
+}
+
+@media (min-width: 992px) {
+  .filters-card.sticky-top {
+    top: 90px !important;
+  }
+
+  .booking-summary-card.sticky-top {
+    top: 100px !important;
+  }
+}
+
+// Booking summary column - exact same as resort rooms page
+.booking-summary-col {
+  position: sticky;
+  background-color: hsl(89, 100%, 90%); // $clr-primary-lighter
+  padding-bottom: 1rem;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  top: 80px; // nav bar height
+
+  @media (min-width: 991px) {
+    overflow-y: auto;
+    bottom: 0;
+    height: 90vh;
+    padding: 20px;
+    z-index: unset;
+  }
+
+  .booking-summary-bar {
+    &--title {
+      position: relative;
+
+      &::after {
+        position: absolute;
+        content: "\f0f3";
+        font-family: "Font Awesome 6 Free";
+        font-size: 18px;
+        color: hsl(90, 100%, 30%);
+        top: 50%;
+        transform: translateY(-50%);
+        right: -22%;
+      }
+    }
+  }
+
+  // Fee breakdown styling to match resort page
+  .fee-breakdown {
+    font-size: inherit; // Use parent font size, not small
+    
+    .stepper-control {
+      // No background, no border - transparent like resort page
+      background: transparent;
+      border: none;
+      
+      button {
+        color: hsl(90, 100%, 30%); // Primary green color
+        font-weight: 600;
+        
+        &:disabled {
+          opacity: 0.4;
+        }
+      }
+      
+      span {
+        font-weight: normal;
+      }
+    }
+  }
+  
+  // Booked spot item styling
+  .booked-spot {
+    border-bottom: 1px solid rgba(0,0,0,0.1);
+    padding-bottom: 0.5rem;
+    
+    &:last-child {
+      border-bottom: none;
+    }
+    padding: 0.25rem 0; /* match resort compact entries */
+  }
+}
+
+.accordion-body {
+  height: 50dvh;
+  overflow-y: scroll;
+}

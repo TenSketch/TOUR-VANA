@@ -1,0 +1,234 @@
+<app-layout>
+  <div class="main">
+    <app-loader *ngIf="showLoader"></app-loader>
+    <div class="count-down-timer">
+      <p>5 mins to review booking</p>
+      <div class="wrapper">
+        <div class="title">
+          <p>mins</p>
+          <p>secs</p>
+        </div>
+        <div class="times">
+          <p #minutes></p>
+          <p #seconds></p>
+        </div>
+      </div>
+    </div>
+
+    <section class="booking-summary pb-5 mt-5">
+      <div class="container" style="margin-top: 25px">
+        <h2 class="mb-3">Booking Summary</h2>
+        <div class="row gap-4">
+          <!-- Left Side: Summary Cards -->
+          <div class="col-md-4">
+            <!-- Spot Details Card -->
+            <div class="card">
+              <h5><strong>Tourist Spot Details</strong></h5>
+              
+              <div class="pb-4" *ngIf="bookingData && bookingData.spots">
+                <div class="pt-2" *ngFor="let spot of bookingData.spots">
+                  <h6 class="fst-italic">
+                    <strong>Spot:</strong><span> {{ spot.name }}</span>
+                  </h6>
+                  <div class="small text-muted ms-2">
+                    <div *ngIf="spot.counts.adults > 0">Adults: {{ spot.counts.adults }}</div>
+                    <div *ngIf="spot.counts.vehicles > 0">Vehicles: {{ spot.counts.vehicles }}</div>
+                    <div *ngIf="spot.counts.cameras > 0">Cameras: {{ spot.counts.cameras }}</div>
+                  </div>
+                  <hr class="my-1">
+                </div>
+                
+                <p class="mb-1 mt-3">
+                  <strong>Total Spots: </strong><span>{{ bookingData.spots.length }}</span>
+                </p>
+                <a class="font-weight-bold" style="cursor: pointer;" title="go back to change selection" (click)="router.navigate(['/tourist-places'])">Change your selection</a>
+              </div>
+            </div>
+
+            <!-- Booking Date Card -->
+            <div class="card">
+              <h5>Your booking details</h5>
+              <div class="d-flex">
+                <div class="col">
+                  <p class="mb-0">Visit Date</p>
+                  <!-- Assuming bookingData has a date or we use today/tomorrow if not set, but usually it's selected before or during checkout. 
+                       If visit date is part of the form, we might display it here dynamically or just static if it was passed. 
+                       For now, let's display the date from bookingData if available, or just "Selected Date" -->
+                   <h6 *ngIf="bookingData?.date">{{ bookingData.date | date:'mediumDate' }}</h6>
+                   <h6 *ngIf="!bookingData?.date" class="text-muted">Date to be selected</h6>
+                </div>
+              </div>
+            </div>
+
+            <!-- Payment Details Card -->
+            <div class="card">
+              <h5>Payment details</h5>
+              <h4>
+                <strong>Grand Total: </strong>
+                INR {{ bookingData?.total || 0 }}
+              </h4>
+            </div>
+
+            <!-- Cancellation Policy Card -->
+            <div class="card">
+              <h5>Cancellation Policy</h5>
+              <strong>Cancellation and Refund:</strong>
+              <div class="table-responsive">
+                <table class="table table-hover mt-3">
+                  <thead>
+                    <tr>
+                      <th>Cancellation Timeframe</th>
+                      <th>Refund Percentage</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>48 to 72 hours prior</td>
+                      <td>90%</td>
+                    </tr>
+                    <tr>
+                      <td>24 to 48 hours prior</td>
+                      <td>80%</td>
+                    </tr>
+                    <tr>
+                      <td>Within 24 hours</td>
+                      <td>No refund</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right Side: User Details Form -->
+          <div class="col-md-6 me-auto mt-5 mt-md-0">
+            <h5 class="mb-4" *ngIf="isLoggedIn(); else loginNotify" style="line-height: 1.5">
+              Check the details we have fetched from your user account {{ getFullUser }}!
+            </h5>
+            <ng-template #loginNotify>
+              <h5 class="mb-4" style="line-height: 1.5">
+                Better Experience to use this app please
+                <a (click)="gotToLogin()" style="cursor: pointer; color: blue;">Sign-in</a>
+              </h5>
+            </ng-template>
+
+            <form [formGroup]="form">
+              <mat-form-field appearance="outline">
+                <mat-label>Guest Name</mat-label>
+                <input type="text" matInput required formControlName="gname" placeholder="Enter Full Name" />
+              </mat-form-field>
+              <mat-form-field appearance="outline" class="mt-3">
+                <mat-label>Mobile no.</mat-label>
+                <input type="text" matInput required placeholder="Enter Mobile Number" formControlName="gphone" />
+              </mat-form-field>
+              <mat-form-field appearance="outline" class="mt-3">
+                <mat-label>Email</mat-label>
+                <input type="email" matInput required placeholder="Enter Email Address" formControlName="gemail" />
+              </mat-form-field>
+              <mat-form-field appearance="outline" class="mt-3">
+                <mat-label>Address</mat-label>
+                <input type="text" matInput required placeholder="Enter your address" formControlName="gaddress" />
+              </mat-form-field>
+              <mat-form-field appearance="outline" class="mt-3">
+                <mat-label>City</mat-label>
+                <input type="text" matInput required placeholder="Enter your city" formControlName="gcity" />
+              </mat-form-field>
+              <mat-form-field appearance="outline" class="mt-3">
+                <mat-label>State</mat-label>
+                <input type="text" matInput required placeholder="Enter your state" formControlName="gstate" />
+              </mat-form-field>
+              <mat-form-field appearance="outline" class="mt-3">
+                <mat-label>Pincode</mat-label>
+                <input type="number" matInput required placeholder="Enter your pincode" formControlName="gpincode" />
+              </mat-form-field>
+              <mat-form-field appearance="outline" class="mt-3">
+                <mat-label>Country</mat-label>
+                <input type="text" matInput required placeholder="Enter your country" formControlName="gcountry" />
+              </mat-form-field>
+
+              <button mat-raised-button color="primary" class=" w-100"
+                (click)="triggerInfoModal()" [disabled]="!form.valid">
+                Confirm and Pay
+              </button>
+              <br><br>
+              
+              <section class="booking-terms mt-4">
+                <p>
+                  🛑 Please avoid closing or returning to the previous page
+                  before completing payment.
+                </p>
+                <p>
+                  💳 If payment isn't successful, you won't receive an invoice
+                  via email. However, you'll still get booking details. Contact
+                  support with your booking ID to confirm your reservation.
+                </p>
+                <h5 class="mb-3">Review the terms before booking.</h5>
+                <!-- Terms cards (simplified for brevity, can copy full content if needed) -->
+                <div class="row row-cols-1 row-cols-md-2 g-4">
+                  <div class="col">
+                    <div class="card h-100">
+                      <div class="card-body">
+                        <h6 class="card-title"><i class="fas fa-bookmark"></i> Booking</h6>
+                        <ul><li>All bookings are contingent upon availability.</li></ul>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col">
+                    <div class="card h-100">
+                      <div class="card-body">
+                        <h6 class="card-title"><i class="fas fa-money-bill-wave"></i> Payment</h6>
+                        <ul><li>Full payment is required upon reservation.</li></ul>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </section>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</app-layout>
+
+<!-- Modals -->
+<div class="modal" tabindex="-1" *ngIf="isModalVisible" style="display: block">
+  <div class="modal-overlay"></div>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Confirmation</h5>
+        <button type="button" class="btn-close" (click)="onCancel()" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p>Are you sure you want to cancel?</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="onCancel()">No</button>
+        <button type="button" class="btn btn-primary" (click)="router.navigate(['/tourist-places'])">Yes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal" tabindex="-1" *ngIf="isInfoModalVisible" style="display: block">
+  <div class="modal-overlay"></div>
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Payment Instructions</h5>
+        <button type="button" class="btn-close" (click)="onCancel()" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">  
+        <ul>  
+            <li>🛑 <strong>Do not refresh or close</strong> the page during payment.</li>  
+            <li>💳 <strong>Confirmation</strong> will be sent within 15 minutes.</li>  
+            <li>⚠️ <strong>If payment fails</strong>, do not rebook immediately. Contact support.</li>  
+        </ul>  
+      </div>
+      <div class="modal-footer justify-content-center">
+        <button mat-raised-button color="primary" class="font-weight-bold w-25" (click)="onOk()"> OK </button>
+      </div>
+    </div>
+  </div>
+</div>
